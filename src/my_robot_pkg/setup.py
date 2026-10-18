@@ -26,7 +26,7 @@ setup(
     entry_points={
         'console_scripts': [
         'uwb_anchors = my_robot_pkg.uwb_anchors:main',
-        # 'trajectory_publisher = my_robot_pkg.trajectory_publisher:main',
+        'trajectory_publisher = my_robot_pkg.trajectory_publisher:main',
     ],
 },
 )

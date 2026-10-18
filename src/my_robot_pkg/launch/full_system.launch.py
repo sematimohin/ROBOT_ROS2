@@ -43,7 +43,8 @@ def generate_launch_description():
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         name='joint_state_publisher_gui',
-        output='screen'
+        output='screen',
+        remappings=[('/joint_states', '/joint_states')]
     )
 
     # ============================================================
@@ -81,40 +82,40 @@ def generate_launch_description():
     # ============================================================
 
     # БЫЛО:
-    static_tf = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_tf_map_to_base',
-        output='screen',
-        arguments=[
-            '--x', '-4',
-            '--y', '-4',
-            '--z', '0.0',
-            '--yaw', '0.0',
-            '--pitch', '0.0',
-            '--roll', '0.0',
-            '--frame-id', 'map',
-            '--child-frame-id', 'base_footprint'
-        ]
-    )
+    # static_tf = Node(
+    #     package='tf2_ros',
+    #     executable='static_transform_publisher',
+    #     name='static_tf_map_to_base',
+    #     output='screen',
+    #     arguments=[
+    #         '--x', '-4',
+    #         '--y', '-4',
+    #         '--z', '0.0',
+    #         '--yaw', '0.0',
+    #         '--pitch', '0.0',
+    #         '--roll', '0.0',
+    #         '--frame-id', 'map',
+    #         '--child-frame-id', 'base_footprint'
+    #     ]
+    # )
 
     # СТАЛО: Статическая связка карты и одометрии (перенос начала координат робота в угол карты)
-    # static_tf_map_to_odom = Node(
-    #         package='tf2_ros',
-    #         executable='static_transform_publisher',
-    #         name='static_tf_map_to_odom',
-    #         output='screen',
-    #         arguments=[
-    #             '--x', '-4.0',
-    #             '--y', '-4.0',
-    #             '--z', '0.0',
-    #             '--yaw', '0.0',
-    #             '--pitch', '0.0',
-    #             '--roll', '0.0',
-    #             '--frame-id', 'map',
-    #             '--child-frame-id', 'odom'  # <-- Теперь дочерний фрейм odom
-    #         ]
-    #     )
+    static_tf_map_to_odom = Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='static_tf_map_to_odom',
+            output='screen',
+            arguments=[
+                '--x', '-4.0',
+                '--y', '-4.0',
+                '--z', '0.0',
+                '--yaw', '0.0',
+                '--pitch', '0.0',
+                '--roll', '0.0',
+                '--frame-id', 'map',
+                '--child-frame-id', 'odom'  # <-- Теперь дочерний фрейм odom
+            ]
+        )
 
         # Новый узел - симулятор истинной траектории
     trajectory_node = Node(
@@ -197,8 +198,8 @@ def generate_launch_description():
         robot_state_publisher,
         joint_state_publisher_gui,
         map_server,
-        static_tf,  # <-- Заменено
-        # trajectory_node,        # <-- Добавлено
+        static_tf_map_to_odom,
+        trajectory_node,
         anchor_1_tf,
         anchor_2_tf,
         anchor_3_tf,
