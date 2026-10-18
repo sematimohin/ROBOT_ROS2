@@ -15,8 +15,8 @@ class TrajectoryPublisher(Node):
         self.tf_broadcaster = TransformBroadcaster(self)
 
         # Параметры движения
-        self.v = 0.8  
-        self.w = 0.8  
+        self.v = 0.3  
+        self.w = 0.3  
         self.side_len = 8
         
         self.t_straight = self.side_len / self.v

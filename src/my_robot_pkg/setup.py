@@ -27,6 +27,7 @@ setup(
         'console_scripts': [
         'uwb_anchors = my_robot_pkg.uwb_anchors:main',
         'trajectory_publisher = my_robot_pkg.trajectory_publisher:main',
+        'fake_clock = my_robot_pkg.fake_clock:main',
     ],
 },
 )
