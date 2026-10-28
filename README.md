@@ -94,8 +94,21 @@ ros2 run plotjuggler plotjuggler
 ros2 topic echo /odom --field pose.pose.position
 ros2 topic echo /odom --field twist.twist
 ```
-## Примечания:
 
+## Граф обмена сообщениями (Computation Graph) (какие узлы существуют, кто на что подписан и кто куда публикует данные)
+```bash
+source ~/ros2_ws/install/setup.bash
+rqt_graph
+```
+
+## Дерево координатных трансформаций (TF Tree)
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 run tf2_tools view_frames
+```
+
+## Примечания:
+1. 
 ```bash
 При работе в WSL 2 системное время внутри Linux может «скакать» (отставать или идти назад) из-за синхронизации с Windows. 
 Это приводит к ошибке TF_OLD_DATA (данные из прошлого), из-за которой робот двигается рывками или замирает.
@@ -104,5 +117,7 @@ ros2 topic echo /odom --field twist.twist
 Все узлы системы (включая RViz2 и robot_state_publisher) запускаются с параметром use_sim_time = True. 
 Это заставляет их игнорировать системные часы Windows и использовать время от нашего генератора. Благодаря этому движение робота становится абсолютно плавным.
 ```
+
+
 
 

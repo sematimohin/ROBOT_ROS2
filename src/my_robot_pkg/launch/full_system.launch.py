@@ -81,6 +81,36 @@ def generate_launch_description():
             ],
             parameters=[{'use_sim_time': True}]
         )
+
+    # БЕЗ ШУМА И БЕЗ СМЕЩЕНИЙ
+    # uwb_simulator = Node(
+    #     package='my_robot_pkg', executable='uwb_simulator', name='uwb_simulator',
+    #     parameters=[{'use_sim_time': True, 'noise_std': 0.0, 'bias': 0.0, 'dropout_prob': 0.0}]
+    # )
+    # lidar_simulator = Node(
+    #     package='my_robot_pkg', executable='lidar_simulator', name='lidar_simulator',
+    #     parameters=[{'use_sim_time': True, 'noise_std': 0.0, 'bias': 0.0, 'dropout_prob': 0.0}]
+    # )
+
+    # # ВКЛ ШУМЫ
+    # uwb_simulator = Node(
+    #     package='my_robot_pkg', executable='uwb_simulator', name='uwb_simulator',
+    #     parameters=[{'use_sim_time': True, 'noise_std': 0.3, 'bias': 0.0, 'dropout_prob': 0.0}]
+    # )
+    # lidar_simulator = Node(
+    #     package='my_robot_pkg', executable='lidar_simulator', name='lidar_simulator',
+    #     parameters=[{'use_sim_time': True, 'noise_std': 0.05, 'bias': 0.0, 'dropout_prob': 0.0}]
+    # )
+
+    # ВКЛ СМЕЩЕНИЯ
+    uwb_simulator = Node(
+        package='my_robot_pkg', executable='uwb_simulator', name='uwb_simulator',
+        parameters=[{'use_sim_time': True, 'noise_std': 0.0, 'bias': 1.0, 'dropout_prob': 0.0}]
+    )
+    lidar_simulator = Node(
+        package='my_robot_pkg', executable='lidar_simulator', name='lidar_simulator',
+        parameters=[{'use_sim_time': True, 'noise_std': 0.0, 'bias': 0.2, 'dropout_prob': 0.0}]
+    )
  
     anchor_1_tf = anchor_tf('uwb_anchor_1', -4.5, -4.5, 0.5)
     anchor_2_tf = anchor_tf('uwb_anchor_2',  4.5, -4.5, 0.5)
@@ -116,6 +146,8 @@ def generate_launch_description():
         anchor_3_tf,
         anchor_4_tf,
         uwb_anchors_node,
+        uwb_simulator,
+        lidar_simulator,
         delayed_rviz,
         delayed_lifecycle,
     ])
